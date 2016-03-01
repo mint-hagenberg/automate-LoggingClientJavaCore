@@ -17,23 +17,25 @@
 
 package at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.filter;
 
-import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.filter.LogFilter;
-import at.fhooe.automate.logger.base.logging.LoggingService.Priority;
+import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLogManager;
 
+/**
+ * Filter for a static text in the message.
+ */
 public class MessageSequenceFilter implements LogFilter {
-	private String msgSequence;
+	private String mMsgSequence;
 
 	public MessageSequenceFilter(String messageSequence) {
-		this.msgSequence = messageSequence;
+		mMsgSequence = messageSequence;
 	}
 
 	@Override
-	public boolean accept(Priority priority, String src, String msg) {
-		return msg.contains(msgSequence);
+	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+		return msg.contains(mMsgSequence);
 	}
 
 	@Override
-	public boolean accept(Priority priority, String src, Object msg) {
+	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
 		return false;
 	}
 }

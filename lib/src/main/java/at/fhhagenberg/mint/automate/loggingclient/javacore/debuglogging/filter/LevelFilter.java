@@ -18,22 +18,24 @@
 package at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.filter;
 
 import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLogManager;
-import at.fhooe.automate.logger.base.logging.LoggingService.Priority;
 
+/**
+ * Filter on a minimum priority level.
+ */
 public class LevelFilter implements LogFilter {
-	private DebugLogManager.Priority priority;
+	private DebugLogManager.Priority mPriority;
 
 	public LevelFilter(DebugLogManager.Priority priority) {
-		this.priority = priority;
+		mPriority = priority;
 	}
 
 	@Override
-	public boolean accept(Priority priority, String src, String msg) {
-		return this.priority.compareTo(priority) <= 0;
+	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+		return mPriority.compareTo(priority) <= 0;
 	}
 
 	@Override
-	public boolean accept(Priority priority, String src, Object msg) {
-		return this.priority.compareTo(priority) <= 0;
+	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+		return mPriority.compareTo(priority) <= 0;
 	}
 }

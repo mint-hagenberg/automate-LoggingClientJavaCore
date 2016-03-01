@@ -40,31 +40,31 @@ public class DebugLogManager extends AbstractManager {
 	}
 
 	/**
-	 * A verbose-only log level filter.
+	 * A verbose-minimum log level filter.
 	 */
 	public static LogFilter VERBOSE_LEVEL_FILTER = new LevelFilter(Priority.VERBOSE);
 	/**
-	 * A debug-only log level filter.
+	 * A debug-minimum log level filter.
 	 */
 	public static LogFilter DEBUG_LEVEL_FILTER = new LevelFilter(Priority.DEBUG);
 	/**
-	 * A info-only log level filter.
+	 * A info-minimum log level filter.
 	 */
 	public static LogFilter INFO_LEVEL_FILTER = new LevelFilter(Priority.INFO);
 	/**
-	 * A warning-only log level filter.
+	 * A warning-minimum log level filter.
 	 */
 	public static LogFilter WARNING_LEVEL_FILTER = new LevelFilter(Priority.WARNING);
 	/**
-	 * An error-only log level filter.
+	 * An error-minimum log level filter.
 	 */
 	public static LogFilter ERROR_LEVEL_FILTER = new LevelFilter(Priority.ERROR);
 	/**
-	 * A critical-only log level filter.
+	 * A critical-minimum log level filter.
 	 */
 	public static LogFilter CRITICAL_LEVEL_FILTER = new LevelFilter(Priority.CRITICAL);
 	/**
-	 * A assert-only log level filter.
+	 * A assert-minimum log level filter.
 	 */
 	public static LogFilter ASSERT_LEVEL_FILTER = new LevelFilter(Priority.ASSERT);
 

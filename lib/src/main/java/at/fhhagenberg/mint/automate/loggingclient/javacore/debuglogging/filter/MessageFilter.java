@@ -17,22 +17,25 @@
 
 package at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.filter;
 
-import at.fhooe.automate.logger.base.logging.LoggingService.Priority;
+import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLogManager;
 
+/**
+ * Filter by a given message.
+ */
 public class MessageFilter implements LogFilter {
-	private Object message;
+	private Object mMessage;
 
 	public MessageFilter(String message) {
-		this.message = message;
+		mMessage = message;
 	}
 
 	@Override
-	public boolean accept(Priority priority, String src, String msg) {
-		return this.message.equals(msg);
+	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+		return mMessage.equals(msg);
 	}
 
 	@Override
-	public boolean accept(Priority priority, String src, Object msg) {
-		return this.message.equals(msg);
+	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+		return mMessage.equals(msg);
 	}
 }
