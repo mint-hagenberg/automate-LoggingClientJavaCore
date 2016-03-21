@@ -12,8 +12,8 @@ apply plugin: 'maven-publish'
 publishing {
     publications {
         maven(MavenPublication) {
-            groupId 'at.fhhagenberg.mint.automate'
-            artifactId 'loggingclient.javacore'
+            groupId GROUP_ID
+            artifactId 'LoggingClientJavaCore'
             version '1.0.0-SNAPSHOT'
 
             from components.java
