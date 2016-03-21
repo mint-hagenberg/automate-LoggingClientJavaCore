@@ -63,7 +63,7 @@ public final class KernelBase {
      * @return -
      */
     public static boolean isKernelUpRunning() {
-        return getKernel().isRunning();
+        return isInitialized() && getKernel().isRunning();
     }
 
     /**
