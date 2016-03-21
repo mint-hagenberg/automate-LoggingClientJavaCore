@@ -3,3 +3,17 @@ apply plugin: 'java'
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 }
+
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId 'at.fhhagenberg.mint.automate'
+            artifactId 'loggingclient.javacore'
+            version '1.0.0-SNAPSHOT'
+
+            from components.java
+        }
+    }
+}
