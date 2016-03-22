@@ -203,7 +203,7 @@ public abstract class AbstractManager implements Manager {
 	}
 
 	@Override
-	public final String getName() {
+	public String getName() {
 		if (mName == null) {
 			mName = getClass().getName();
 		}
