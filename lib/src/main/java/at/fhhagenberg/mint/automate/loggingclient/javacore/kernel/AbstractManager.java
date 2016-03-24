@@ -60,6 +60,7 @@ public abstract class AbstractManager implements Manager {
 
 	private String mName;
 	private Status mStatus;
+	private boolean mDisabled = false;
 	private List<Id> mDependencies = new ArrayList<>();
 
 	private Kernel mKernel;
@@ -155,6 +156,9 @@ public abstract class AbstractManager implements Manager {
 		mKernel = kernel;
 		mStatus = Status.STARTED;
 		doStart();
+		if (mDisabled) {
+			pause();
+		}
 	}
 
 	@Override
@@ -179,12 +183,29 @@ public abstract class AbstractManager implements Manager {
 
 	@Override
 	public final void resume() {
+		if (mDisabled) {
+			return;
+		}
 		if (mStatus != Status.PAUSED) {
 			throw new IllegalStateException("service " + getName()
 					+ " is not in paused state");
 		}
 		doResume();
 		mStatus = Status.STARTED;
+	}
+
+	@Override
+	public void setDisabled(boolean disabled) {
+		if (mDisabled == disabled) {
+			return;
+		}
+
+		mDisabled = disabled;
+		if (mDisabled) {
+			pause();
+		} else {
+			resume();
+		}
 	}
 
 	@Override

@@ -30,78 +30,85 @@ public interface Manager {
 	 */
 	enum Status {
 		/**
-		 * Indicates that a service is not ready to be used and needs to be
+		 * Indicates that a manager is not ready to be used and needs to be
 		 * started.
 		 */
 		STOPPED,
 
 		/**
-		 * Indicates that a service has been started and is ready do be used.
+		 * Indicates that a manager has been started and is ready do be used.
 		 */
 		STARTED,
 
 		/**
-		 * Indicates that a service has been paused and can be resumed.
+		 * Indicates that a manager has been paused and can be resumed.
 		 */
 		PAUSED
 	}
 
 	/**
-	 * Returns the identifier of this service.
+	 * Returns the identifier of this manager.
 	 *
-	 * @return identifier of this service
+	 * @return identifier of this manager
 	 */
 	Id getId();
 
 	/**
-	 * Returns the name of this service.
+	 * Returns the name of this manager.
 	 *
-	 * @return human readable name of this service
+	 * @return human readable name of this manager
 	 */
 	String getName();
 
 	/**
-	 * Returns the status of this service.
+	 * Returns the status of this manager.
 	 *
-	 * @return the current status of this service
+	 * @return the current status of this manager
 	 */
 	Status getStatus();
 
 	/**
-	 * Starts this service. After a successful call of this method the status of
-	 * this service changes to {@code Status.STARTED}. This method should only
-	 * be called if this service is in <strong>started state</strong>.
+	 * Starts this manager. After a successful call of this method the status of
+	 * this manager changes to {@code Status.STARTED}. This method should only
+	 * be called if this manager is in <strong>started state</strong>.
 	 *
-	 * @param core service locator that administers this service
-	 * @throws ManagerException in case this service could not be started
+	 * @param core manager locator that administers this manager
+	 * @throws ManagerException in case this manager could not be started
 	 * @see #getStatus()
 	 * @see Status
 	 */
 	void start(Kernel core) throws ManagerException;
 
 	/**
-	 * Stops this service. After a successful call of this method the status of
-	 * this service changes to {@code Status.STOPPED} This method should only be
-	 * called if this service is in <strong>started state</strong>.
+	 * Stops this manager. After a successful call of this method the status of
+	 * this manager changes to {@code Status.STOPPED} This method should only be
+	 * called if this manager is in <strong>started state</strong>.
 	 */
 	void stop();
 
 	/**
-	 * Pauses this service. After a successful call of this method the status of
-	 * this service changes to {@code Status.PAUSED}. This method should only be
-	 * called if this service is in <strong>started state</strong>.
+	 * Pauses this manager. After a successful call of this method the status of
+	 * this manager changes to {@code Status.PAUSED}. This method should only be
+	 * called if this manager is in <strong>started state</strong>.
 	 */
 	void pause();
 
 	/**
-	 * Resumes this service. After a successful call of this method the status
-	 * of this service changes to {@code Status.STARTED}. This method should
-	 * only be called if this service is in <strong>paused state</strong>.
+	 * Resumes this manager. After a successful call of this method the status
+	 * of this manager changes to {@code Status.STARTED}. This method should
+	 * only be called if this manager is in <strong>paused state</strong>.
 	 */
 	void resume();
 
 	/**
-	 * Returns the number of services this service depends on.
+	 * Set the disabled state. Disabling will pauses this manager and remember the state after
+	 * stopping and starting the kernel. Will not persist after deleting kernel for now. Enabling
+	 * will revers the effect.
+	 */
+	void setDisabled(boolean disabled);
+
+	/**
+	 * Returns the number of managers this manager depends on.
 	 *
 	 * @return number of dependencies
 	 * @see #getDependency
@@ -109,15 +116,15 @@ public interface Manager {
 	int numOfDependencies();
 
 	/**
-	 * Returns the identifier of a service this services depends on.
+	 * Returns the identifier of a manager this managers depends on.
 	 * <p>
 	 * <p>
-	 * To query all services this service depends on, use the following code:
+	 * To query all managers this manager depends on, use the following code:
 	 * </p>
 	 * <pre>
-	 * for (int i = 0; i &lt; service.numOfDependencies(); ++i) {
-	 * 	CogaenId serviceId = service.getDependency(i);
-	 * 	doSomeThing(serviceId);
+	 * for (int i = 0; i &lt; manager.numOfDependencies(); ++i) {
+	 * 	CogaenId managerId = manager.getDependency(i);
+	 * 	doSomeThing(managerId);
 	 * }
 	 * </pre>
 	 *

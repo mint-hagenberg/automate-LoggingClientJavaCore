@@ -142,7 +142,15 @@ public class Kernel implements Runnable {
 			mManagerMap.put(oldManager.getId(), oldManager);
 			throw new RuntimeException("manager with id " + oldManager.getId() + " already added");
 		}
-		// TODO: auto add dependencies!
+
+		//if (manager.numOfDependencies() > 0) {
+		//	for (int i = 0, len = manager.numOfDependencies(); i < len; ++i) {
+		//		Id dependencyId = manager.getDependency(i);
+		//		if (!hasManager(dependencyId)) {
+		//			// TODO: add manager if possible!
+		//		}
+		//	}
+		//}
 		mManagers.add(manager);
 	}
 
@@ -160,7 +168,7 @@ public class Kernel implements Runnable {
 
 		Manager manager = mManagerMap.remove(managerId);
 		mManagers.remove(manager);
-		// TODO: auto remove dependencies if possible?
+		// TODO: auto remove dependencies if possible
 	}
 
 	/**
