@@ -245,13 +245,14 @@ public class Kernel implements Runnable {
 		try {
 			mScheduledExecutorService.awaitTermination(2000, TimeUnit.MILLISECONDS);
 		} catch (InterruptedException e) {
-// Ignore
+			// Ignore
 		}
 
 		for (KernelListener listener : mListeners) {
 			listener.onPrepareShutdown();
 		}
 
+		mRunning = false;
 		for (KernelListener listener : mListeners) {
 			listener.onShutdown();
 		}
@@ -261,7 +262,6 @@ public class Kernel implements Runnable {
 				stopManager(manager);
 			}
 		}
-		mRunning = false;
 	}
 
 	/**
