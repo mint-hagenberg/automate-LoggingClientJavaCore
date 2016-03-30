@@ -69,15 +69,11 @@ public class EventManager extends UpdateableManager implements KernelListener {
 		for (Bag<EventListener> listeners : mListenerMap.values()) {
 			numListeners += listeners.size();
 		}
-
-		if (numListeners != 0) {
-			getLogger().logWarning(getLoggingSource(), "num of listeners = " + numListeners);
-		}
 		if (numListeners > 0) {
+			getLogger().logWarning(getLoggingSource(), "num of listeners = " + numListeners);
 			for (Bag<EventListener> listeners : mListenerMap.values()) {
 				for (listeners.reset(); listeners.hasNext(); ) {
-					getLogger().logDebug(getLoggingSource(),
-							"listener " + listeners.next().getClass().getName() + " was not removed");
+					getLogger().logDebug(getLoggingSource(), "listener " + listeners.next().getClass().getName() + " was not removed");
 				}
 			}
 		}
@@ -170,8 +166,7 @@ public class EventManager extends UpdateableManager implements KernelListener {
 		} else {
 			getLogger().logWarning(
 					getLoggingSource(),
-					"attempt to add listener for event type " + typeId + " twice (" + listener.getClass().getName()
-							+ ")");
+					"attempt to add listener for event type " + typeId + " twice (" + listener.getClass().getName() + ")");
 		}
 	}
 
@@ -195,10 +190,8 @@ public class EventManager extends UpdateableManager implements KernelListener {
 		Bag<EventListener> listeners = mListenerMap.get(typeId);
 
 		if (listeners == null || !listeners.remove(listener)) {
-			getLogger().logWarning(
-					getLoggingSource(),
-					"attempt to remove unregistered listener for event type " + typeId + " ("
-							+ listener.getClass().getName() + ")");
+			getLogger().logWarning(getLoggingSource(),
+					"attempt to remove unregistered listener for event type " + typeId + " (" + listener.getClass().getName() + ")");
 		}
 	}
 
