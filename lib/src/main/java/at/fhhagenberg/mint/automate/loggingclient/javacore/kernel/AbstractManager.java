@@ -38,209 +38,188 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.name.Id;
  * </ul>
  */
 public abstract class AbstractManager implements Manager {
-	/**
-	 * Gets the instance of this class from the provided Kernel.
-	 * <p>
-	 * This kind of magic is from:
-	 * http://stackoverflow.com/questions/450807/java-generics-how-do-i-make-the-method-return-type-generic
-	 *
-	 * @param <T>          the generic type
-	 * @param kernel       the Kernel
-	 * @param serviceClazz the service clazz
-	 * @return single instance of AbstractManager
-	 */
-	public final static <T extends Manager> T getInstance(Kernel kernel,
-														  Class<T> serviceClazz) {
-		Id temp = new Id(serviceClazz);
-		if (kernel.hasManager(temp)) {
-			return serviceClazz.cast(kernel.getManager(temp));
-		}
-		return null;
-	}
+    /**
+     * Gets the instance of this class from the provided Kernel.
+     * <p>
+     * This kind of magic is from:
+     * http://stackoverflow.com/questions/450807/java-generics-how-do-i-make-the-method-return-type-generic
+     *
+     * @param <T>          the generic type
+     * @param kernel       the Kernel
+     * @param serviceClazz the service clazz
+     * @return single instance of AbstractManager
+     */
+    public final static <T extends Manager> T getInstance(Kernel kernel,
+                                                          Class<T> serviceClazz) {
+        Id temp = new Id(serviceClazz);
+        if (kernel.hasManager(temp)) {
+            return serviceClazz.cast(kernel.getManager(temp));
+        }
+        return null;
+    }
 
-	private String mName;
-	private Status mStatus;
-	private boolean mDisabled = false;
-	private List<Id> mDependencies = new ArrayList<>();
+    private String mName;
+    private Status mStatus;
+    private List<Id> mDependencies = new ArrayList<>();
 
-	private Kernel mKernel;
+    private Kernel mKernel;
 
-	private String mLoggingSource;
-	private DebugLogManager mLogger;
+    private String mLoggingSource;
+    private DebugLogManager mLogger;
 
-	/**
-	 * Defines a {@code Manager} that is initially set to stopped state.
-	 */
-	public AbstractManager() {
-		mStatus = Status.STOPPED;
-	}
+    /**
+     * Defines a {@code Manager} that is initially set to stopped state.
+     */
+    public AbstractManager() {
+        mStatus = Status.STOPPED;
+    }
 
-	/**
-	 * Adds the specified service as dependency to this service.
-	 *
-	 * @param serviceId identifier of the service this service depends on
-	 */
-	protected final void addDependency(Id serviceId) {
-		mDependencies.add(serviceId);
-	}
+    /**
+     * Adds the specified service as dependency to this service.
+     *
+     * @param serviceId identifier of the service this service depends on
+     */
+    protected final void addDependency(Id serviceId) {
+        mDependencies.add(serviceId);
+    }
 
-	/**
-	 * Removes the specified service as dependency from this service.
-	 *
-	 * @param serviceId identifier of the service to be removed as dependency
-	 */
-	protected final void removeDependency(Id serviceId) {
-		mDependencies.remove(serviceId);
-	}
+    /**
+     * Removes the specified service as dependency from this service.
+     *
+     * @param serviceId identifier of the service to be removed as dependency
+     */
+    protected final void removeDependency(Id serviceId) {
+        mDependencies.remove(serviceId);
+    }
 
-	/**
-	 * Returns the Kernel that administers this service.
-	 *
-	 * @return -
-	 */
-	public final Kernel getKernel() {
-		if (getStatus() == Status.STOPPED) {
-			throw new IllegalStateException();
-		}
-		return this.mKernel;
-	}
+    /**
+     * Returns the Kernel that administers this service.
+     *
+     * @return -
+     */
+    public final Kernel getKernel() {
+        if (getStatus() == Status.STOPPED) {
+            throw new IllegalStateException();
+        }
+        return this.mKernel;
+    }
 
-	public final DebugLogManager getLogger() {
-		if (mLogger == null) {
-			mLogger = getInstance(getKernel(), DebugLogManager.class);
-		}
+    public final DebugLogManager getLogger() {
+        if (mLogger == null) {
+            mLogger = getInstance(getKernel(), DebugLogManager.class);
+        }
 
-		return mLogger;
-	}
+        return mLogger;
+    }
 
-	/**
-	 * Derived classes can override this method in order to do whatever is
-	 * necessary to enter <strong>started state</strong>.
-	 *
-	 * @throws ManagerException -
-	 */
-	protected void doStart() throws ManagerException {
-		// intentionally left empty
-	}
+    /**
+     * Derived classes can override this method in order to do whatever is
+     * necessary to enter <strong>started state</strong>.
+     *
+     * @throws ManagerException -
+     */
+    protected void doStart() throws ManagerException {
+        // intentionally left empty
+    }
 
-	/**
-	 * Derived classes can override this method in order to do whatever is
-	 * necessary to enter <strong>stopped state</strong>.
-	 */
-	protected void doStop() {
-		// intentionally left empty
-	}
+    /**
+     * Derived classes can override this method in order to do whatever is
+     * necessary to enter <strong>stopped state</strong>.
+     */
+    protected void doStop() {
+        // intentionally left empty
+    }
 
-	/**
-	 * Derived classes can override this method in order to do whatever is
-	 * necessary to enter <strong>paused state</strong>.
-	 */
-	protected void doPause() {
-		// intentionally left empty
-	}
+    /**
+     * Derived classes can override this method in order to do whatever is
+     * necessary to enter <strong>paused state</strong>.
+     */
+    protected void doPause() {
+        // intentionally left empty
+    }
 
-	/**
-	 * Derived classes can override this method in order to do whatever is
-	 * necessary to resume <strong>started state</strong>.
-	 */
-	protected void doResume() {
-		// intentionally left empty
-	}
+    /**
+     * Derived classes can override this method in order to do whatever is
+     * necessary to resume <strong>started state</strong>.
+     */
+    protected void doResume() {
+        // intentionally left empty
+    }
 
-	@Override
-	public final void start(Kernel kernel) throws ManagerException {
-		if (mStatus != Status.STOPPED) {
-			throw new IllegalStateException("service " + getName()
-					+ " is not in stopped state");
-		}
-		mKernel = kernel;
-		mStatus = Status.STARTED;
-		doStart();
-		if (mDisabled) {
-			pause();
-		}
-	}
+    @Override
+    public final void start(Kernel kernel) throws ManagerException {
+        if (mStatus != Status.STOPPED) {
+            throw new IllegalStateException("service " + getName()
+                    + " is not in stopped state");
+        }
+        mKernel = kernel;
+        mStatus = Status.STARTED;
+        doStart();
+    }
 
-	@Override
-	public final void stop() {
-		if (mStatus != Status.STARTED && mStatus != Status.PAUSED) {
-			throw new IllegalStateException("service " + getName()
-					+ " is not in started or paused state");
-		}
-		doStop();
-		mStatus = Status.STOPPED;
-	}
+    @Override
+    public final void stop() {
+        if (mStatus != Status.STARTED && mStatus != Status.PAUSED) {
+            throw new IllegalStateException("service " + getName()
+                    + " is not in started or paused state");
+        }
+        doStop();
+        mStatus = Status.STOPPED;
+    }
 
-	@Override
-	public final void pause() {
-		if (mStatus != Status.STARTED) {
-			throw new IllegalStateException("service " + getName()
-					+ " is not in started state");
-		}
-		doPause();
-		mStatus = Status.PAUSED;
-	}
+    @Override
+    public final void pause() {
+        if (mStatus != Status.STARTED) {
+            throw new IllegalStateException("service " + getName()
+                    + " is not in started state");
+        }
+        doPause();
+        mStatus = Status.PAUSED;
+    }
 
-	@Override
-	public final void resume() {
-		if (mDisabled) {
-			return;
-		}
-		if (mStatus != Status.PAUSED) {
-			throw new IllegalStateException("service " + getName()
-					+ " is not in paused state");
-		}
-		doResume();
-		mStatus = Status.STARTED;
-	}
+    @Override
+    public final void resume() {
+        if (mStatus != Status.PAUSED) {
+            throw new IllegalStateException("service " + getName()
+                    + " is not in paused state");
+        }
+        doResume();
+        mStatus = Status.STARTED;
+    }
 
-	@Override
-	public void setDisabled(boolean disabled) {
-		if (mDisabled == disabled) {
-			return;
-		}
+    @Override
+    public final Status getStatus() {
+        return mStatus;
+    }
 
-		mDisabled = disabled;
-		if (mDisabled) {
-			pause();
-		} else {
-			resume();
-		}
-	}
+    @Override
+    public final int numOfDependencies() {
+        return mDependencies.size();
+    }
 
-	@Override
-	public final Status getStatus() {
-		return mStatus;
-	}
+    @Override
+    public final Id getDependency(int idx) {
+        return mDependencies.get(idx);
+    }
 
-	@Override
-	public final int numOfDependencies() {
-		return mDependencies.size();
-	}
+    @Override
+    public String getName() {
+        if (mName == null) {
+            mName = getClass().getName();
+        }
+        return mName;
+    }
 
-	@Override
-	public final Id getDependency(int idx) {
-		return mDependencies.get(idx);
-	}
+    /**
+     * Gets the logging source to identify the log origin.
+     *
+     * @return the logging source
+     */
+    public final String getLoggingSource() {
+        if (mLoggingSource == null) {
+            mLoggingSource = getClass().getSimpleName();
+        }
 
-	@Override
-	public String getName() {
-		if (mName == null) {
-			mName = getClass().getName();
-		}
-		return mName;
-	}
-
-	/**
-	 * Gets the logging source to identify the log origin.
-	 *
-	 * @return the logging source
-	 */
-	public final String getLoggingSource() {
-		if (mLoggingSource == null) {
-			mLoggingSource = getClass().getSimpleName();
-		}
-
-		return mLoggingSource;
-	}
+        return mLoggingSource;
+    }
 }
