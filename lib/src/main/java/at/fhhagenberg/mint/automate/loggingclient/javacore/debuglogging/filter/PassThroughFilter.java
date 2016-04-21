@@ -22,14 +22,15 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Just allow any kind of log message.
  */
+@SuppressWarnings("unused")
 public class PassThroughFilter implements LogFilter {
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
-		return true;
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+        return true;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
-		return true;
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+        return true;
+    }
 }

@@ -21,7 +21,7 @@ package at.fhhagenberg.mint.automate.loggingclient.javacore.time;
  * Interface that provides trusted time information, possibly coming from an NTP
  * server. Implementations may cache answers until {@link #forceRefresh()}.
  */
-// @hide
+@SuppressWarnings("unused")
 public interface TrustedTime {
 	/**
 	 * Force update with an external trusted time source, returning {@code true} when successful.

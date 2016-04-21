@@ -22,24 +22,37 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Combine two log filters and only accept when both return true.
  */
+@SuppressWarnings("unused")
 public class AndFilter implements LogFilter {
-	private LogFilter mFilter1;
-	private LogFilter mFilter2;
+    /**
+     * First filter.
+     */
+    private LogFilter mFilter1;
+    /**
+     * Second filter.
+     */
+    private LogFilter mFilter2;
 
-	public AndFilter(LogFilter filter1, LogFilter filter2) {
-		mFilter1 = filter1;
-		mFilter2 = filter2;
-	}
+    /**
+     * Constructor.
+     *
+     * @param filter1 -
+     * @param filter2 -
+     */
+    public AndFilter(LogFilter filter1, LogFilter filter2) {
+        mFilter1 = filter1;
+        mFilter2 = filter2;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
-		return mFilter1.accept(priority, src, msg)
-				&& mFilter2.accept(priority, src, msg);
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+        return mFilter1.accept(priority, src, msg)
+                && mFilter2.accept(priority, src, msg);
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
-		return mFilter1.accept(priority, src, msg)
-				&& mFilter2.accept(priority, src, msg);
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+        return mFilter1.accept(priority, src, msg)
+                && mFilter2.accept(priority, src, msg);
+    }
 }

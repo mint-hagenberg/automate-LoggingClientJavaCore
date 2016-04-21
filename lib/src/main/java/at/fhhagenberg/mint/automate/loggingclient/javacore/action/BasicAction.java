@@ -22,24 +22,28 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.kernel.Kernel;
 /**
  * Basic abstract action that has a kernel.
  */
+@SuppressWarnings("unused")
 public abstract class BasicAction implements Action {
-	private Kernel mKernel;
+    /**
+     * The associated kernel instance.
+     */
+    private Kernel mKernel;
 
-	/**
-	 * Initialize with a kernel.
-	 *
-	 * @param kernel -
-	 */
-	public BasicAction(Kernel kernel) {
-		mKernel = kernel;
-	}
+    /**
+     * Initialize with a kernel.
+     *
+     * @param kernel -
+     */
+    public BasicAction(Kernel kernel) {
+        mKernel = kernel;
+    }
 
-	/**
-	 * Get the kernel.
-	 *
-	 * @return -
-	 */
-	public final Kernel getKernel() {
-		return mKernel;
-	}
+    /**
+     * Get the kernel.
+     *
+     * @return -
+     */
+    public final Kernel getKernel() {
+        return mKernel;
+    }
 }

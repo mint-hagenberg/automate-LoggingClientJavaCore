@@ -25,23 +25,30 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.kernel.Kernel;
 /**
  * Unregister from an event with the event manager.
  */
+@SuppressWarnings("unused")
 public class UnregisterEventListenerAction implements Action {
-	private EventManager mEventManager;
-	private EventListener mListener;
+    /**
+     * Event manager that will be used to unregister.
+     */
+    private EventManager mEventManager;
+    /**
+     * Remove this listener from the event manager.
+     */
+    private EventListener mListener;
 
-	/**
-	 * Unregister.
-	 *
-	 * @param kernel   -
-	 * @param listener -
-	 */
-	public UnregisterEventListenerAction(Kernel kernel, EventListener listener) {
-		mEventManager = AbstractManager.getInstance(kernel, EventManager.class);
-		mListener = listener;
-	}
+    /**
+     * Unregister.
+     *
+     * @param kernel   -
+     * @param listener -
+     */
+    public UnregisterEventListenerAction(Kernel kernel, EventListener listener) {
+        mEventManager = AbstractManager.getInstance(kernel, EventManager.class);
+        mListener = listener;
+    }
 
-	@Override
-	public void execute() {
-		mEventManager.removeListener(mListener);
-	}
+    @Override
+    public void execute() {
+        mEventManager.removeListener(mListener);
+    }
 }

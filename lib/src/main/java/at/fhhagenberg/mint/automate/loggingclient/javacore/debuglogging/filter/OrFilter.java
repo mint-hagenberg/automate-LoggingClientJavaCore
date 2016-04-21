@@ -22,33 +22,42 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Combine multiple filters with an or, so if any of the filters returns true, the message will be accepted.
  */
+@SuppressWarnings("unused")
 public class OrFilter implements LogFilter {
-	private LogFilter[] mFilters;
+    /**
+     * A number of filters to compine.
+     */
+    private LogFilter[] mFilters;
 
-	public OrFilter(LogFilter... filter) {
-		mFilters = filter;
-	}
+    /**
+     * Constructor.
+     *
+     * @param filter -
+     */
+    public OrFilter(LogFilter... filter) {
+        mFilters = filter;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
 
-		for (LogFilter f : mFilters) {
-			if (f.accept(priority, src, msg)) {
-				return true;
-			}
-		}
+        for (LogFilter f : mFilters) {
+            if (f.accept(priority, src, msg)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
-		for (LogFilter f : mFilters) {
-			if (f.accept(priority, src, msg)) {
-				return true;
-			}
-		}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+        for (LogFilter f : mFilters) {
+            if (f.accept(priority, src, msg)) {
+                return true;
+            }
+        }
 
-		return false;
-	}
+        return false;
+    }
 }

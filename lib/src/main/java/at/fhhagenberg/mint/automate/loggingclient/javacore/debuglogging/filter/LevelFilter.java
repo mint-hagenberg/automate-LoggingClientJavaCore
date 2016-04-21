@@ -22,20 +22,29 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Filter on a minimum priority level.
  */
+@SuppressWarnings("unused")
 public class LevelFilter implements LogFilter {
-	private DebugLogManager.Priority mPriority;
+    /**
+     * The priority.
+     */
+    private DebugLogManager.Priority mPriority;
 
-	public LevelFilter(DebugLogManager.Priority priority) {
-		mPriority = priority;
-	}
+    /**
+     * Constructor.
+     *
+     * @param priority -
+     */
+    public LevelFilter(DebugLogManager.Priority priority) {
+        mPriority = priority;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
-		return mPriority.compareTo(priority) <= 0;
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+        return mPriority.compareTo(priority) <= 0;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
-		return mPriority.compareTo(priority) <= 0;
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+        return mPriority.compareTo(priority) <= 0;
+    }
 }

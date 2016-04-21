@@ -24,6 +24,7 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.name.Id;
  *
  * @see Kernel
  */
+@SuppressWarnings("unused")
 public interface Manager {
     /**
      * Represents the status of a manager.

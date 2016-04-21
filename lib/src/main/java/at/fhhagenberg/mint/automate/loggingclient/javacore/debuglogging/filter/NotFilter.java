@@ -22,20 +22,29 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Invert the filter.
  */
+@SuppressWarnings("unused")
 public class NotFilter implements LogFilter {
-	private LogFilter mFilter;
+    /**
+     * A log filter.
+     */
+    private LogFilter mFilter;
 
-	public NotFilter(LogFilter filter) {
-		this.mFilter = filter;
-	}
+    /**
+     * Constructor.
+     *
+     * @param filter -
+     */
+    public NotFilter(LogFilter filter) {
+        this.mFilter = filter;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
-		return !this.mFilter.accept(priority, src, msg);
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+        return !this.mFilter.accept(priority, src, msg);
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
-		return !this.mFilter.accept(priority, src, msg);
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+        return !this.mFilter.accept(priority, src, msg);
+    }
 }

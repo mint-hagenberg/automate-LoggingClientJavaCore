@@ -27,33 +27,40 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.name.Id;
 /**
  * Send an event to the event manager for dispatching.
  */
+@SuppressWarnings("unused")
 public class EventAction implements Action {
-	private EventManager mEventManager;
-	private Event mEvent;
+    /**
+     * Event manager that the event is sent to.
+     */
+    private EventManager mEventManager;
+    /**
+     * The event that should be dispatched.
+     */
+    private Event mEvent;
 
-	/**
-	 * Dispatch a specific event.
-	 *
-	 * @param kernel -
-	 * @param event  -
-	 */
-	public EventAction(Kernel kernel, Event event) {
-		mEventManager = AbstractManager.getInstance(kernel, EventManager.class);
-		mEvent = event;
-	}
+    /**
+     * Dispatch a specific event.
+     *
+     * @param kernel -
+     * @param event  -
+     */
+    public EventAction(Kernel kernel, Event event) {
+        mEventManager = AbstractManager.getInstance(kernel, EventManager.class);
+        mEvent = event;
+    }
 
-	/**
-	 * Dispatch a simple event with just a type and without custom arguments.
-	 *
-	 * @param core        -
-	 * @param eventTypeId -
-	 */
-	public EventAction(Kernel core, Id eventTypeId) {
-		this(core, new SimpleEvent(eventTypeId));
-	}
+    /**
+     * Dispatch a simple event with just a type and without custom arguments.
+     *
+     * @param core        -
+     * @param eventTypeId -
+     */
+    public EventAction(Kernel core, Id eventTypeId) {
+        this(core, new SimpleEvent(eventTypeId));
+    }
 
-	@Override
-	public void execute() {
-		mEventManager.dispatchEvent(mEvent);
-	}
+    @Override
+    public void execute() {
+        mEventManager.dispatchEvent(mEvent);
+    }
 }

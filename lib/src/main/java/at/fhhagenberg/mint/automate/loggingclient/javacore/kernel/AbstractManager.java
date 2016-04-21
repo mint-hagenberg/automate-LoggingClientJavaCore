@@ -37,6 +37,7 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.name.Id;
  * <li>{@code doStop}</li>
  * </ul>
  */
+@SuppressWarnings("unused")
 public abstract class AbstractManager implements Manager {
     /**
      * Gets the instance of this class from the provided Kernel.
@@ -49,8 +50,7 @@ public abstract class AbstractManager implements Manager {
      * @param serviceClazz the service clazz
      * @return single instance of AbstractManager
      */
-    public final static <T extends Manager> T getInstance(Kernel kernel,
-                                                          Class<T> serviceClazz) {
+    public static <T extends Manager> T getInstance(Kernel kernel, Class<T> serviceClazz) {
         Id temp = new Id(serviceClazz);
         if (kernel.hasManager(temp)) {
             return serviceClazz.cast(kernel.getManager(temp));
@@ -58,13 +58,31 @@ public abstract class AbstractManager implements Manager {
         return null;
     }
 
+    /**
+     * The human readable name for the manager.
+     */
     private String mName;
+    /**
+     * The current status of the manager.
+     */
     private Status mStatus;
+    /**
+     * List of manager dependencies (ids).
+     */
     private List<Id> mDependencies = new ArrayList<>();
 
+    /**
+     * The kernel associated with this manager.
+     */
     private Kernel mKernel;
 
+    /**
+     * A logging source that can be used for "fast" logging.
+     */
     private String mLoggingSource;
+    /**
+     * A debug logger.
+     */
     private DebugLogManager mLogger;
 
     /**
@@ -104,6 +122,11 @@ public abstract class AbstractManager implements Manager {
         return this.mKernel;
     }
 
+    /**
+     * Get the debug logger to easily log some output.
+     *
+     * @return -
+     */
     public final DebugLogManager getLogger() {
         if (mLogger == null) {
             mLogger = getInstance(getKernel(), DebugLogManager.class);

@@ -51,22 +51,47 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.util.Bag;
  * @see Manager
  * @see Updatable
  */
+@SuppressWarnings("unused")
 public class Kernel implements Runnable {
     /**
      * The update interval for updatable manager in ms.
      */
     private static final int THREAD_SLEEP_TIME = 500;
 
+    /**
+     * The version of this kernel.
+     */
     private static final Version VERSION = new Version(2, 0, 0);
 
+    /**
+     * The id-manager map to quickly access managers by id. Registered managers only.
+     */
     private Map<Id, Manager> mManagerMap;
+    /**
+     * A list of registered managers.
+     */
     private List<Manager> mManagers;
+    /**
+     * The list of active kernel listeners.
+     */
     private List<KernelListener> mListeners;
+    /**
+     * List of the updatable items that will be updated in a certain interval.
+     */
     private Bag<Updatable> mUpdatables;
+    /**
+     * Indicates if the kernel is running.
+     */
     private boolean mRunning;
 
+    /**
+     * A set of disabled managers.
+     */
     private Set<Id> mDisabledManagers;
 
+    /**
+     * The scheduler that will execute the updatable items in a certain time interval.
+     */
     private ScheduledExecutorService mScheduledExecutorService;
 
     /**
@@ -214,6 +239,12 @@ public class Kernel implements Runnable {
         return new Date().getTime();
     }
 
+    /**
+     * Start the manager after all the dependencies and update the status.
+     *
+     * @param manager -
+     * @throws ManagerException
+     */
     private void startManager(Manager manager) throws ManagerException {
         if (isManagerDisabled(manager.getId())) {
             new DebugLogAction(this, DebugLogManager.Priority.INFO, "Kernel", "Not starting manager as it is globally disabled").execute();
@@ -234,6 +265,12 @@ public class Kernel implements Runnable {
         manager.start(this);
     }
 
+    /**
+     * Check if a manager is disabled.
+     *
+     * @param id -
+     * @return -
+     */
     protected final boolean isManagerDisabled(Id id) {
         new DebugLogAction(this, DebugLogManager.Priority.INFO, "Kernel", "Looking for " + id + " in " + mDisabledManagers + " found " + mDisabledManagers.contains(id)).execute();
         return mDisabledManagers.contains(id);
@@ -243,14 +280,14 @@ public class Kernel implements Runnable {
      * Implement to persist disabled managers, depending on the platform implementation.
      */
     protected void storeDisabledManagers() {
-        // We don't persist
+        // We don't persist by default
     }
 
     /**
      * Implement to load persisted disabled managers, depending on the platform implementation.
      */
     protected void restoreDisabledManagers() {
-        // We don't persist
+        // We don't persist by default
     }
 
     /**
@@ -304,6 +341,13 @@ public class Kernel implements Runnable {
         manager.stop();
     }
 
+    /**
+     * Check if a manager has a dependencies to another one (by id).
+     *
+     * @param s1        -
+     * @param managerId -
+     * @return -
+     */
     private boolean isDependent(Manager s1, Id managerId) {
         for (int i = 0; i < s1.numOfDependencies(); ++i) {
             if (s1.getDependency(i).equals(managerId)) {

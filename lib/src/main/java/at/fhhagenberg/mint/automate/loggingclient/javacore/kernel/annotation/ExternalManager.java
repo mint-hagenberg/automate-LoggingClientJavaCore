@@ -27,6 +27,12 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
+@SuppressWarnings("unused")
 public @interface ExternalManager {
-	boolean allowsUserStatusChange() default true;
+    /**
+     * Does the manager allow the status t be changed by the user?
+     *
+     * @return -
+     */
+    boolean allowsUserStatusChange() default true;
 }

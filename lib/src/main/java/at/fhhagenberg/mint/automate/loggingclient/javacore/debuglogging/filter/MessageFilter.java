@@ -22,20 +22,29 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Filter by a given message.
  */
+@SuppressWarnings("unused")
 public class MessageFilter implements LogFilter {
-	private Object mMessage;
+    /**
+     * A message object
+     */
+    private String mMessage;
 
-	public MessageFilter(String message) {
-		mMessage = message;
-	}
+    /**
+     * Constructor.
+     *
+     * @param message -
+     */
+    public MessageFilter(String message) {
+        mMessage = message;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
-		return mMessage.equals(msg);
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+        return mMessage.equals(msg);
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
-		return mMessage.equals(msg);
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+        return mMessage.equals(msg);
+    }
 }

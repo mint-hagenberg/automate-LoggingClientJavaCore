@@ -22,20 +22,29 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Filter for a static text in the message.
  */
+@SuppressWarnings("unused")
 public class MessageSequenceFilter implements LogFilter {
-	private String mMsgSequence;
+    /**
+     * A message sequence.
+     */
+    private String mMsgSequence;
 
-	public MessageSequenceFilter(String messageSequence) {
-		mMsgSequence = messageSequence;
-	}
+    /**
+     * Constructor.
+     *
+     * @param messageSequence -
+     */
+    public MessageSequenceFilter(String messageSequence) {
+        mMsgSequence = messageSequence;
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
-		return msg.contains(mMsgSequence);
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, String msg) {
+        return msg.contains(mMsgSequence);
+    }
 
-	@Override
-	public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
-		return false;
-	}
+    @Override
+    public boolean accept(DebugLogManager.Priority priority, String src, Object msg) {
+        return false;
+    }
 }

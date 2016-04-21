@@ -23,8 +23,17 @@ import java.io.Serializable;
  * Identifier which can be compared and even generated.
  */
 public class Id implements Serializable {
+    /**
+     * The string id.
+     */
     private String mId;
+    /**
+     * A code id which can be the alternative to the string id.
+     */
     private int mCode;
+    /**
+     * Indicator if the id was generated.
+     */
     private boolean mIsGenerated;
 
     /**
@@ -52,6 +61,7 @@ public class Id implements Serializable {
      *
      * @param code -
      */
+    @SuppressWarnings("unused")
     Id(int code) {
         mCode = code;
         mIsGenerated = true;
@@ -101,6 +111,12 @@ public class Id implements Serializable {
         return mIsGenerated;
     }
 
+    /**
+     * Check Id equality.
+     *
+     * @param other -
+     * @return -
+     */
     private boolean equalId(Id other) {
         if (mId == null && other != null && other.mId != null) {
             return false;

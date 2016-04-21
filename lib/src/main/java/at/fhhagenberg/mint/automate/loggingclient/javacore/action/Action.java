@@ -20,9 +20,10 @@ package at.fhhagenberg.mint.automate.loggingclient.javacore.action;
 /**
  * Basically just something executable.
  */
+@SuppressWarnings("unused")
 public interface Action {
-	/**
-	 * Execute the action defined in the class.
-	 */
-	void execute();
+    /**
+     * Execute the action defined in the class.
+     */
+    void execute();
 }

@@ -26,28 +26,38 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.name.Id;
 /**
  * Register as an event listener with the event manager.
  */
+@SuppressWarnings("unused")
 public class RegisterEventListenerAction implements Action {
-	private EventManager mEventManager;
-	private Id[] mTypes;
-	private EventListener mListener;
+    /**
+     * The event manager that will register to.
+     */
+    private EventManager mEventManager;
+    /**
+     * Event types the listener is interested in.
+     */
+    private Id[] mTypes;
+    /**
+     * Event listener we want to register.
+     */
+    private EventListener mListener;
 
-	/**
-	 * Register.
-	 *
-	 * @param kernel   -
-	 * @param listener -
-	 * @param types    -
-	 */
-	public RegisterEventListenerAction(Kernel kernel, EventListener listener, Id... types) {
-		mEventManager = AbstractManager.getInstance(kernel, EventManager.class);
-		mListener = listener;
-		mTypes = types;
-	}
+    /**
+     * Register.
+     *
+     * @param kernel   -
+     * @param listener -
+     * @param types    -
+     */
+    public RegisterEventListenerAction(Kernel kernel, EventListener listener, Id... types) {
+        mEventManager = AbstractManager.getInstance(kernel, EventManager.class);
+        mListener = listener;
+        mTypes = types;
+    }
 
-	@Override
-	public void execute() {
-		for (Id mType : mTypes) {
-			mEventManager.addListener(mListener, mType);
-		}
-	}
+    @Override
+    public void execute() {
+        for (Id mType : mTypes) {
+            mEventManager.addListener(mListener, mType);
+        }
+    }
 }

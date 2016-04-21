@@ -25,32 +25,41 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * A default formatter that just appends everything in a simple manner.
  */
+@SuppressWarnings("unused")
 public class StandardFormatter implements LogFormatter {
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss");
+    /**
+     * The date format for the date output.
+     */
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
+            "yyyy-MM-dd HH:mm:ss");
 
-	private String timeToString(Date time) {
-		return DATE_FORMAT.format(time);
-	}
+    /**
+     * Convert a date to a string.
+     *
+     * @param time -
+     * @return -
+     */
+    private static String timeToString(Date time) {
+        return DATE_FORMAT.format(time);
+    }
 
-	@Override
-	public String format(DebugLogManager.Priority priority, String src, String msg, Date time) {
-		StringBuilder builder = new StringBuilder(timeToString(time))
-				.append(" " + priority);
-		if (src != null) {
-			builder.append(" [" + src + "]");
-		}
-		builder.append(": ");
+    @Override
+    public String format(DebugLogManager.Priority priority, String src, String msg, Date time) {
+        StringBuilder builder = new StringBuilder(timeToString(time)).append(" ").append(priority);
+        if (src != null) {
+            builder.append(" [").append(src).append("]");
+        }
+        builder.append(": ");
 
-		if (msg != null) {
-			builder.append(msg);
-		}
+        if (msg != null) {
+            builder.append(msg);
+        }
 
-		return builder.toString();
-	}
+        return builder.toString();
+    }
 
-	@Override
-	public int formatPriority(DebugLogManager.Priority priority) {
-		return 0;
-	}
+    @Override
+    public int formatPriority(DebugLogManager.Priority priority) {
+        return 0;
+    }
 }

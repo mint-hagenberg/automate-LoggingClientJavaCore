@@ -24,23 +24,24 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.DebugLog
 /**
  * Interface for the formatter that knows how to format a certain log message and priority.
  */
+@SuppressWarnings("unused")
 public interface LogFormatter {
-	/**
-	 * Format a priority, source string, message and time.
-	 *
-	 * @param priority -
-	 * @param src      -
-	 * @param msg      -
-	 * @param time     -
-	 * @return -
-	 */
-	String format(DebugLogManager.Priority priority, String src, String msg, Date time);
+    /**
+     * Format a priority, source string, message and time.
+     *
+     * @param priority -
+     * @param src      -
+     * @param msg      -
+     * @param time     -
+     * @return -
+     */
+    String format(DebugLogManager.Priority priority, String src, String msg, Date time);
 
-	/**
-	 * Get the integer value for a priority.
-	 *
-	 * @param priority -
-	 * @return -
-	 */
-	int formatPriority(DebugLogManager.Priority priority);
+    /**
+     * Get the integer value for a priority.
+     *
+     * @param priority -
+     * @return -
+     */
+    int formatPriority(DebugLogManager.Priority priority);
 }

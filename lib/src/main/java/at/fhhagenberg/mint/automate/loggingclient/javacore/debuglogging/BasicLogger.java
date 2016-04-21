@@ -26,58 +26,71 @@ import at.fhhagenberg.mint.automate.loggingclient.javacore.debuglogging.formatte
 /**
  * A basic implementation of the log listener that allows adding of filters.
  */
+@SuppressWarnings("unused")
 public abstract class BasicLogger implements LogListener {
-	private LogFormatter mFormatter;
-	private List<LogFilter> mFilters = new ArrayList<>();
+    /**
+     * The used log formatter.
+     */
+    private LogFormatter mFormatter;
+    /**
+     * A list of applied filter.
+     */
+    private List<LogFilter> mFilters = new ArrayList<>();
 
-	public BasicLogger(LogFilter filter, LogFormatter formatter) {
-		if (filter != null) {
-			addFilter(filter);
-		}
+    /**
+     * Constructor.
+     *
+     * @param filter    -
+     * @param formatter -
+     */
+    public BasicLogger(LogFilter filter, LogFormatter formatter) {
+        if (filter != null) {
+            addFilter(filter);
+        }
 
-		mFormatter = formatter;
-	}
+        mFormatter = formatter;
+    }
 
-	/**
-	 * Return all the registered filters.
-	 *
-	 * @return -
-	 */
-	public List<LogFilter> getFilters() {
-		return mFilters;
-	}
+    /**
+     * Return all the registered filters.
+     *
+     * @return -
+     */
+    public List<LogFilter> getFilters() {
+        return mFilters;
+    }
 
-	/**
-	 * Add a filter.
-	 *
-	 * @param filter -
-	 */
-	public final void addFilter(LogFilter filter) {
-		mFilters.add(filter);
-	}
+    /**
+     * Add a filter.
+     *
+     * @param filter -
+     */
+    public final void addFilter(LogFilter filter) {
+        mFilters.add(filter);
+    }
 
-	/**
-	 * Remove a filter.
-	 *
-	 * @param filter -
-	 */
-	public final void removeFilter(LogFilter filter) {
-		mFilters.remove(filter);
-	}
+    /**
+     * Remove a filter.
+     *
+     * @param filter -
+     */
+    public final void removeFilter(LogFilter filter) {
+        mFilters.remove(filter);
+    }
 
-	/**
-	 * Remove all filters.
-	 */
-	public final void removeAllFilters() {
-		mFilters.clear();
-	}
+    /**
+     * Remove all filters.
+     */
+    public final void removeAllFilters() {
+        mFilters.clear();
+    }
 
-	/**
-	 * Get the set formatter.
-	 *
-	 * @return -
-	 */
-	public LogFormatter getFormatter() {
-		return mFormatter;
-	}
+    /**
+     * Get the set formatter.
+     *
+     * @return -
+     */
+    public LogFormatter getFormatter() {
+        return mFormatter;
+    }
 }

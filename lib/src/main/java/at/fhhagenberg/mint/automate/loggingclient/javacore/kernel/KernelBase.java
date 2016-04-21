@@ -20,9 +20,16 @@ package at.fhhagenberg.mint.automate.loggingclient.javacore.kernel;
 /**
  * Singleton-like class to manage the Kernel.
  */
+@SuppressWarnings("unused")
 public final class KernelBase {
+    /**
+     * Singleton instance.
+     */
     private static KernelBase sInstance;
 
+    /**
+     * The initialized kernel.
+     */
     private Kernel mKernel;
 
     /**

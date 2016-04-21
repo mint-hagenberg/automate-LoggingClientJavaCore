@@ -34,31 +34,30 @@ package at.fhhagenberg.mint.automate.loggingclient.javacore.kernel;
  *
  * @see AbstractManager
  */
-public abstract class UpdateableManager extends AbstractManager implements
-		Updatable {
-	@Override
-	protected void doStart() throws ManagerException {
-		super.doStart();
-		getKernel().addUpdatable(this);
-	}
+public abstract class UpdateableManager extends AbstractManager implements Updatable {
+    @Override
+    protected void doStart() throws ManagerException {
+        super.doStart();
+        getKernel().addUpdatable(this);
+    }
 
-	@Override
-	protected void doStop() {
-		if (getStatus() != Status.PAUSED) {
-			getKernel().removeUpdateable(this);
-		}
-		super.doStop();
-	}
+    @Override
+    protected void doStop() {
+        if (getStatus() != Status.PAUSED) {
+            getKernel().removeUpdateable(this);
+        }
+        super.doStop();
+    }
 
-	@Override
-	protected void doPause() {
-		getKernel().removeUpdateable(this);
-		super.doPause();
-	}
+    @Override
+    protected void doPause() {
+        getKernel().removeUpdateable(this);
+        super.doPause();
+    }
 
-	@Override
-	protected void doResume() {
-		getKernel().addUpdatable(this);
-		super.doResume();
-	}
+    @Override
+    protected void doResume() {
+        getKernel().addUpdatable(this);
+        super.doResume();
+    }
 }
