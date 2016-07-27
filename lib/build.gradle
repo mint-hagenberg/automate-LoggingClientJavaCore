@@ -16,6 +16,10 @@
  *     along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+plugins {
+    id "com.jfrog.bintray" version "1.7"
+}
+
 apply plugin: 'java'
 
 sourceCompatibility = JavaVersion.VERSION_1_7
@@ -31,10 +35,28 @@ publishing {
     publications {
         maven(MavenPublication) {
             groupId GROUP_ID
-            artifactId 'LoggingClientJavaCore'
-            version '1.0.0-SNAPSHOT'
+            artifactId ARTIFACT_ID
+            version VERSION
 
             from components.java
+        }
+    }
+}
+
+bintray {
+    user = BINTRAY_USER
+    key = BINTRAY_API_KEY
+    pkg {
+        repo = 'automate'
+        name = ARTIFACT_ID
+        userOrg = 'mint-hagenberg'
+        licenses = ['GPL-3.0']
+        vcsUrl = 'https://github.com/mint-hagenberg/automate-' + ARTIFACT_ID
+        publications = ['maven']
+        version {
+            name = VERSION
+            released = new Date()
+            vcsTag = VERSION
         }
     }
 }
